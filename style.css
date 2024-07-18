@@ -20,10 +20,12 @@ body {
 .projects-container {
   background-color: rgb(152, 152, 152);
   /* height: 100%; */
+  width: 30vw;
 }
 
 .todos-container {
   background-color: whitesmoke;
+  width: 70vw;
 }
 
 h1 {
