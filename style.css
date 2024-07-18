@@ -4,6 +4,15 @@ body {
   margin: 0;
 }
 
+.nav-bar {
+  width: 100vw;
+  background-color: gray;
+  padding: 24px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .main {
   display: flex;
 }
@@ -15,4 +24,8 @@ body {
 
 .todos-container {
   background-color: whitesmoke;
+}
+
+h1 {
+  margin: 0;
 }
