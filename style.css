@@ -43,6 +43,7 @@ h1 {
 
 .new-todo-btn, .new-project-btn {
   margin: 32px 0;
-  height: 32px;
-  
+  height: 40px;
+  width: 160px;
+  border-radius: 16px;
 }
