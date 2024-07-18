@@ -41,11 +41,15 @@ h1 {
   margin: 0;
 }
 
+h3 {
+  margin-bottom: 32px;
+}
+
 .new-todo-btn, .new-project-btn {
   margin: 32px 0;
   height: 40px;
   width: 160px;
   border-radius: 16px;
   border: none;
-  
+  cursor: pointer;
 }
