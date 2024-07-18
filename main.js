@@ -55,4 +55,16 @@ class Todo {
   toggleChecked() {
     this.checked = !this.checked
   }
+
+  getTodosText() {
+    return this.text
+  }
+
+  getTodosDueDate() {
+    return this.dueDate
+  }
+
+  getTodosTime() {
+    return this.time
+  }
 }
