@@ -40,3 +40,9 @@ body {
 h1 {
   margin: 0;
 }
+
+.new-todo-btn, .new-project-btn {
+  margin: 32px 0;
+  height: 32px;
+  
+}
