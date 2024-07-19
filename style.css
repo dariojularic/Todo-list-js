@@ -79,3 +79,42 @@ h3 {
   overflow: auto;
   padding: 0;
 }
+
+.new-project-form {
+  display: flex;
+  flex-direction: column;
+  background-color:  rgb(239, 239, 239);
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.project-form-input, .todo-form-input, .todo-due-date-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.project-form-btn, .todo-form-btn {
+  border-radius: 8px;
+  color: white;
+  background-color: dodgerblue;
+  font-weight: 600;
+  border: none;
+  padding: 8px;
+}
+
+.new-todo-form {
+  background-color:rgb(152, 152, 152);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 160px;
+  padding: 24px;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

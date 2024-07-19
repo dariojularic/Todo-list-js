@@ -4,7 +4,8 @@ const projectsList = document.querySelector(".projects-list");
 const todosList = document.querySelector(".todos-list");
 const newProjectBtn = document.querySelector(".new-project-btn");
 const newTodoBtn = document.querySelector(".new-todo-btn");
-
+const projectForm = document.querySelector(".new-project-form");
+const todoForm = document.querySelector(".new-todo-form");
 
 class ProjectManager{
   constructor() {
