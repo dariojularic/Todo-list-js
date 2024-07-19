@@ -6,10 +6,26 @@ const newProjectBtn = document.querySelector(".new-project-btn");
 const newTodoBtn = document.querySelector(".new-todo-btn");
 const projectForm = document.querySelector(".new-project-form");
 const todoForm = document.querySelector(".new-todo-form");
+const projectFormInput = document.querySelector(".project-form-input");
+const todoTextFormInput = document.querySelector(".todo-text-form-input");
+const dueDateInput = document.querySelector(".due-date-input");
+
+let todoTextFormInputValue = "";
+let projectFormInputValue = "";
+let dueDateInputValue = "";
+
+projectFormInput.addEventListener("input", () => projectFormInputValue = projectFormInput.value);
+todoTextFormInput.addEventListener("input", () => todoTextFormInputValue = todoTextFormInput.value);
+dueDateInput.addEventListener("input", () => dueDateInputValue = dueDateInput.value)
+
 
 class ProjectManager{
   constructor() {
     this.projects = [];
+  }
+
+  addProject(project) {
+    this.projects.push(project)
   }
 
   findProject(projectId) {
@@ -75,3 +91,28 @@ class Todo {
     return this.time
   }
 }
+
+function clearProjectFormInput() {
+  projectFormInput.value = "";
+}
+
+function cleartodoTextFormInput() {
+  todoTextFormInput.value = "";
+  dueDateInput.value = "";
+}
+
+const projectManager = new ProjectManager();
+
+projectForm.addEventListener("submit", (event) => {
+  event.preventDefault()
+  const project = new Project();
+  projectManager.addProject(project);
+  clearProjectFormInput()
+  console.log(projectManager.projects)
+})
+
+todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const todo = new Todo(todoTextFormInputValue, dueDateInputValue)
+  console.log(todo)
+})

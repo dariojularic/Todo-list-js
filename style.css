@@ -55,7 +55,7 @@ h3 {
   font-weight: 600;
   background-color: dodgerblue;
   color: white;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
 .new-todo-btn:hover, .new-project-btn:hover {
@@ -88,7 +88,7 @@ h3 {
   border-radius: 16px;
 }
 
-.project-form-input, .todo-form-input, .todo-due-date-input {
+.project-form-input, .todo-text-form-input, .due-date-input {
   padding: 8px;
   border-radius: 8px;
   border: none;
@@ -103,6 +103,7 @@ h3 {
   font-weight: 600;
   border: none;
   padding: 8px;
+  cursor: pointer;
 }
 
 .new-todo-form {
@@ -111,10 +112,23 @@ h3 {
   flex-direction: column;
   justify-content: space-around;
   height: 160px;
-  padding: 24px;
+  padding: 40px;
   border-radius: 8px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.5s;
+  display: none;
 }
