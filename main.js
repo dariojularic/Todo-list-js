@@ -108,14 +108,20 @@ function clearTodoFormInput() {
 
 const projectManager = new ProjectManager();
 
+// provjerit ima li aktivni projekt. 
+// ako ima, deaktivirat ga i napravit novi. 
+// ako nema, napravit novi
+
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log(projectManager.findActiveProject())
-  // if (projectManager.)
-  const project = new Project(projectFormInputValue);
-  projectManager.addProject(project);
-  clearProjectFormInput()
-  console.log(projectManager.projects)
+  if (projectManager.findActiveProject() === undefined) {
+
+    console.log(projectManager.findActiveProject() === undefined)
+    const project = new Project(projectFormInputValue);
+    projectManager.addProject(project);
+    clearProjectFormInput()
+    console.log(projectManager.projects)
+  }
 })
 
 todoForm.addEventListener("submit", (event) => {
