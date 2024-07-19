@@ -38,7 +38,8 @@ class ProjectManager{
 }
 
 class Project {
-  constructor() {
+  constructor(name) {
+    this.name = name
     this.id = crypto.randomUUID();
     this.todos = [];
     this.isActive = true;
@@ -109,7 +110,9 @@ const projectManager = new ProjectManager();
 
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const project = new Project();
+  console.log(projectManager.findActiveProject())
+  // if (projectManager.)
+  const project = new Project(projectFormInputValue);
   projectManager.addProject(project);
   clearProjectFormInput()
   console.log(projectManager.projects)
