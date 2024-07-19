@@ -55,7 +55,12 @@ h3 {
   font-weight: 600;
   background-color: dodgerblue;
   color: white;
+  transition: 0.3s;
+}
 
+.new-todo-btn:hover, .new-project-btn:hover {
+  background-color: rgb(16, 117, 219);
+  transition: 0.3s;
 }
 
 .projects-list {
@@ -65,4 +70,12 @@ h3 {
   overflow: auto;
   padding-right: 40px;
   padding-left: 0px;
+}
+
+.todos-list {
+  max-width: 600px;
+  max-height: 400px;
+  list-style: none;
+  overflow: auto;
+  padding: 0;
 }

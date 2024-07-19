@@ -1,5 +1,11 @@
 import './style.css'
 
+const projectsList = document.querySelector(".projects-list");
+const todosList = document.querySelector(".todos-list");
+const newProjectBtn = document.querySelector(".new-project-btn");
+const newTodoBtn = document.querySelector(".new-todo-btn");
+
+
 class ProjectManager{
   constructor() {
     this.projects = [];
