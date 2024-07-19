@@ -28,8 +28,8 @@ class ProjectManager{
     this.projects.push(project)
   }
 
-  findProject(projectId) {
-    return this.projects.find(project => project.id = projectId);
+  findActiveProject() {
+    return this.projects.find(project => project.isActive === true);
   }
 
   deleteProject(projectId) {
@@ -42,6 +42,10 @@ class Project {
     this.id = crypto.randomUUID();
     this.todos = [];
     this.isActive = true;
+  }
+
+  addTodo(todo) {
+    this.todos.push(todo);
   }
 
   findTodo(todoId) {
@@ -96,7 +100,7 @@ function clearProjectFormInput() {
   projectFormInput.value = "";
 }
 
-function cleartodoTextFormInput() {
+function clearTodoFormInput() {
   todoTextFormInput.value = "";
   dueDateInput.value = "";
 }
@@ -104,7 +108,7 @@ function cleartodoTextFormInput() {
 const projectManager = new ProjectManager();
 
 projectForm.addEventListener("submit", (event) => {
-  event.preventDefault()
+  event.preventDefault();
   const project = new Project();
   projectManager.addProject(project);
   clearProjectFormInput()
@@ -113,6 +117,9 @@ projectForm.addEventListener("submit", (event) => {
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  const activeProject = projectManager.findActiveProject();
   const todo = new Todo(todoTextFormInputValue, dueDateInputValue)
-  console.log(todo)
+  activeProject.addTodo(todo)
+  console.log(activeProject)
+  clearTodoFormInput()
 })
