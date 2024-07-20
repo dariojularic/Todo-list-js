@@ -9,7 +9,6 @@ const todoForm = document.querySelector(".new-todo-form");
 const projectFormInput = document.querySelector(".project-form-input");
 const todoTextFormInput = document.querySelector(".todo-text-form-input");
 const dueDateInput = document.querySelector(".due-date-input");
-const projectHeading = document.querySelector(".project-heading");
 
 let todoTextFormInputValue = "";
 let projectFormInputValue = "";
@@ -53,7 +52,7 @@ class ProjectManager{
   renderProjects() {
     projectsList.innerHTML = "";
     this.projects.forEach(project => {
-      const html = `<li class="project-list-item" data-id="${project.id}">
+      const html = `<li class="project-list-item item-${project.id}" data-id="${project.id}">
                       <p class="project-list-item-paragraph">${project.name} <i class="fa-regular fa-circle-xmark delete-project-btn"></i></p>
                     </li>`;
       projectsList.insertAdjacentHTML("beforeend", html);
@@ -140,9 +139,6 @@ function clearTodoFormInput() {
   dueDateInput.value = "";
 }
 
-function setProjectHeading(project) {
-  projectHeading.textContent = project
-}
 
 const projectManager = new ProjectManager();
 
@@ -169,11 +165,10 @@ projectForm.addEventListener("submit", (event) => {
   if (!projectFormInput.value) return
   const newProject = new Project(projectFormInputValue);
   projectManager.setActiveProject(newProject);
-  clearProjectFormInput()
+  clearProjectFormInput();
   projectManager.addProject(newProject);
   projectManager.renderProjects();
-  setProjectHeading(projectManager.getActiveProject().name)
-
+  projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -191,17 +186,15 @@ projectsList.addEventListener("click", (event) => {
     projectManager.renderProjects();
     projectManager.setActiveProject(projectManager.getProjects()[0]);
     projectManager.getActiveProject().renderTodos();
-    setProjectHeading(projectManager.getActiveProject().name)
+    projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
   }
 
   if (event.target.closest("li").classList.contains("project-list-item")) {
-    console.log(projectsList.querySelector(".selected"))
     projectsList.querySelector(".selected").classList.remove("selected")
     event.target.closest("li").classList.add("selected");
     
     const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.setActiveProject(selectedProject);
     projectManager.getActiveProject().renderTodos();
-    setProjectHeading(projectManager.getActiveProject().name)
   }
 })
