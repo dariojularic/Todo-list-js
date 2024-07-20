@@ -125,6 +125,8 @@ h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 2;
 }
 
 .overlay {
@@ -136,8 +138,8 @@ h3 {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: all 0.5s;
-  display: none;
+  transition: background-color 0.5s;
+  visibility: hidden;
 }
 
 .todo-list-item-paragraph {

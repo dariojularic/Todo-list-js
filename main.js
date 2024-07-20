@@ -9,6 +9,7 @@ const todoForm = document.querySelector(".new-todo-form");
 const projectFormInput = document.querySelector(".project-form-input");
 const todoTextFormInput = document.querySelector(".todo-text-form-input");
 const dueDateInput = document.querySelector(".due-date-input");
+const overlay = document.querySelector(".overlay");
 
 let todoTextFormInputValue = "";
 let projectFormInputValue = "";
@@ -178,6 +179,8 @@ todoForm.addEventListener("submit", (event) => {
   projectManager.getActiveProject().addTodo(todo);
   clearTodoFormInput();
   projectManager.getActiveProject().renderTodos();
+  overlay.style.visibility = "hidden";
+  todoForm.style.visibility = "hidden";
 })
 
 projectsList.addEventListener("click", (event) => {
@@ -212,5 +215,12 @@ projectsList.addEventListener("click", (event) => {
 // })
 
 newTodoBtn.addEventListener("click", () => {
-  todoForm.removeAttribute("hidden")
+  todoForm.style.visibility = "visible";
+  // todoForm.style.zIndex = 2;
+  overlay.style.visibility = "visible";
+})
+
+overlay.addEventListener("click", () => {
+  overlay.style.visibility = "hidden";
+  todoForm.style.visibility = "hidden";
 })
