@@ -56,7 +56,7 @@ class ProjectManager{
       const html = `<li class="project-list-item" data-id="${project.id}">
                       <p class="project-list-item-paragraph">${project.name} <i class="fa-regular fa-circle-xmark delete-project-btn"></i></p>
                     </li>`;
-      projectsList.insertAdjacentHTML("afterbegin", html);
+      projectsList.insertAdjacentHTML("beforeend", html);
     })
   }
 }
@@ -95,7 +95,7 @@ class Project {
       const html = `<li class="todo-list-item" data-id="${todo.id}">
                       <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span></p>
                     </li>`;
-      todosList.insertAdjacentHTML("afterbegin", html)
+      todosList.insertAdjacentHTML("beforeend", html)
     })
   }
 }
@@ -173,6 +173,7 @@ projectForm.addEventListener("submit", (event) => {
   projectManager.addProject(newProject);
   projectManager.renderProjects();
   setProjectHeading(projectManager.getActiveProject().name)
+
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -194,7 +195,9 @@ projectsList.addEventListener("click", (event) => {
   }
 
   if (event.target.closest("li").classList.contains("project-list-item")) {
-    // event.target.closest("li").classList.add("selected");
+    console.log(projectsList.querySelector(".selected"))
+    projectsList.querySelector(".selected").classList.remove("selected")
+    event.target.closest("li").classList.add("selected");
     
     const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.setActiveProject(selectedProject);
