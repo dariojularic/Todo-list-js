@@ -184,9 +184,17 @@ projectsList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-project-btn")) {
     projectManager.deleteProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.renderProjects();
+    if (!projectManager.getProjects()[0]) {
+      // ovo treba provjerit
+      todosList.innerHTML = "";
+      return
+    }
     projectManager.setActiveProject(projectManager.getProjects()[0]);
     projectManager.getActiveProject().renderTodos();
-    projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
+    console.log(projectManager.getActiveProject())
+    projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
+    // projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
+    return
   }
 
   if (event.target.closest("li").classList.contains("project-list-item")) {
