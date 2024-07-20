@@ -9,6 +9,7 @@ const todoForm = document.querySelector(".new-todo-form");
 const projectFormInput = document.querySelector(".project-form-input");
 const todoTextFormInput = document.querySelector(".todo-text-form-input");
 const dueDateInput = document.querySelector(".due-date-input");
+const projectHeading = document.querySelector(".project-heading");
 
 let todoTextFormInputValue = "";
 let projectFormInputValue = "";
@@ -25,6 +26,10 @@ class ProjectManager{
     this.activeProject = null
   }
 
+  getProjects() {
+    return this.projects
+  }
+
   getActiveProject() {
     return this.activeProject
   }
@@ -37,19 +42,19 @@ class ProjectManager{
     this.projects.push(project)
   }
 
-  // findActiveProject() {
-  //   return this.projects.find(project => project.isActive === true);
-  // }
+  findProject(projectId) {
+    return this.projects.find(project => project.id === projectId);
+  }
 
   deleteProject(projectId) {
-    return this.projects.filter(project => project.id !== projectId)
+    return this.projects = this.projects.filter(project => project.id !== projectId)
   }
 
   renderProjects() {
     projectsList.innerHTML = "";
     this.projects.forEach(project => {
-      const html = `<li>
-                      <p class="project-list-item">${project.name} <i class="fa-regular fa-circle-xmark" data-id="${project.id}"></i></p>
+      const html = `<li class="project-list-item" data-id="${project.id}">
+                      <p class="project-list-item-paragraph">${project.name} <i class="fa-regular fa-circle-xmark delete-project-btn"></i></p>
                     </li>`;
       projectsList.insertAdjacentHTML("afterbegin", html);
     })
@@ -87,7 +92,7 @@ class Project {
   renderTodos() {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
-      const html = `<li class="todo-list-item">
+      const html = `<li class="todo-list-item" data-id="${todo.id}">
                       <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span></p>
                     </li>`;
       todosList.insertAdjacentHTML("afterbegin", html)
@@ -135,6 +140,10 @@ function clearTodoFormInput() {
   dueDateInput.value = "";
 }
 
+function setProjectHeading(project) {
+  projectHeading.textContent = project
+}
+
 const projectManager = new ProjectManager();
 
 // provjerit ima li aktivni projekt. 
@@ -163,15 +172,33 @@ projectForm.addEventListener("submit", (event) => {
   clearProjectFormInput()
   projectManager.addProject(newProject);
   projectManager.renderProjects();
-  console.log("projects: ", projectManager.projects)
+  setProjectHeading(projectManager.getActiveProject().name)
 })
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!todoTextFormInput.value || !dueDateInput.value || !projectManager.getActiveProject()) return // treba ubacit toastify
-  const todo = new Todo(todoTextFormInputValue, dueDateInputValue)
-  projectManager.getActiveProject().addTodo(todo)
-  console.log("active project: ", projectManager.getActiveProject())
-  clearTodoFormInput()
-  projectManager.getActiveProject().renderTodos()
+  const todo = new Todo(todoTextFormInputValue, dueDateInputValue);
+  projectManager.getActiveProject().addTodo(todo);
+  clearTodoFormInput();
+  projectManager.getActiveProject().renderTodos();
+})
+
+projectsList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-project-btn")) {
+    projectManager.deleteProject(event.target.closest("li").getAttribute("data-id"));
+    projectManager.renderProjects();
+    projectManager.setActiveProject(projectManager.getProjects()[0]);
+    projectManager.getActiveProject().renderTodos();
+    setProjectHeading(projectManager.getActiveProject().name)
+  }
+
+  if (event.target.closest("li").classList.contains("project-list-item")) {
+    // event.target.closest("li").classList.add("selected");
+    
+    const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
+    projectManager.setActiveProject(selectedProject);
+    projectManager.getActiveProject().renderTodos();
+    setProjectHeading(projectManager.getActiveProject().name)
+  }
 })

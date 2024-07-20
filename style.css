@@ -40,9 +40,15 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  margin-bottom: 32px;
+  font-size: 36px;
+
+}
+
 h3 {
   margin-bottom: 32px;
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .new-todo-btn, .new-project-btn {
@@ -145,8 +151,21 @@ h3 {
   cursor: pointer;
 }
 
-.project-list-item {
+.project-list-item-paragraph {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.project-list-item {
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.project-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.selected {
+  background-color: rgba(0, 0, 0, 0.3);
 }
