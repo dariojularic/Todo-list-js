@@ -206,3 +206,11 @@ projectsList.addEventListener("click", (event) => {
     projectManager.getActiveProject().renderTodos();
   }
 })
+
+// newProjectBtn.addEventListener("click", () => {
+//   projectForm
+// })
+
+newTodoBtn.addEventListener("click", () => {
+  todoForm.removeAttribute("hidden")
+})
