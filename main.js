@@ -22,7 +22,10 @@ dueDateInput.addEventListener("input", () => dueDateInputValue = dueDateInput.va
 class ProjectManager{
   constructor() {
     this.projects = [];
+    this.activeProject = null
   }
+
+  // set activeProject
 
   addProject(project) {
     this.projects.push(project)
@@ -114,18 +117,25 @@ const projectManager = new ProjectManager();
 
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  if (projectManager.findActiveProject() === undefined) {
-
-    console.log(projectManager.findActiveProject() === undefined)
-    const project = new Project(projectFormInputValue);
-    projectManager.addProject(project);
-    clearProjectFormInput()
-    console.log(projectManager.projects)
+  if (!projectFormInput.value) return
+  if (projectManager.findActiveProject() !== undefined) {
+    const activateProject = projectManager.findActiveProject()
+    activateProject.deactivateProject()
   }
+  const newProject = new Project(projectFormInputValue);
+  clearProjectFormInput()
+  projectManager.addProject(newProject);
+  console.log(projectManager.projects)
 })
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  if (!todoTextFormInput.value || !dueDateInput.value) return
+  if (projectManager.findActiveProject() !== undefined) {
+    const activateProject = projectManager.findActiveProject()
+    activateProject.deactivateProject()
+  }
+  
   const activeProject = projectManager.findActiveProject();
   const todo = new Todo(todoTextFormInputValue, dueDateInputValue)
   activeProject.addTodo(todo)
