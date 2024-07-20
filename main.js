@@ -25,18 +25,34 @@ class ProjectManager{
     this.activeProject = null
   }
 
-  // set activeProject
+  getActiveProject() {
+    return this.activeProject
+  }
+
+  setActiveProject(project) {
+    this.activeProject = project
+  }
 
   addProject(project) {
     this.projects.push(project)
   }
 
-  findActiveProject() {
-    return this.projects.find(project => project.isActive === true);
-  }
+  // findActiveProject() {
+  //   return this.projects.find(project => project.isActive === true);
+  // }
 
   deleteProject(projectId) {
     return this.projects.filter(project => project.id !== projectId)
+  }
+
+  renderProjects() {
+    projectsList.innerHTML = "";
+    this.projects.forEach(project => {
+      const html = `<li>
+                      <p class="project-list-item">${project.name} <i class="fa-regular fa-circle-xmark" data-id="${project.id}"></i></p>
+                    </li>`;
+      projectsList.insertAdjacentHTML("afterbegin", html);
+    })
   }
 }
 
@@ -45,7 +61,7 @@ class Project {
     this.name = name
     this.id = crypto.randomUUID();
     this.todos = [];
-    this.isActive = true;
+    // this.isActive = true;
   }
 
   addTodo(todo) {
@@ -56,16 +72,26 @@ class Project {
     return this.todos.find(todo => todo.id === todoId);
   }
 
-  activateProject() {
-    this.isActive = true
-  }
+  // activateProject() {
+  //   this.isActive = true
+  // }
 
-  deactivateProject() {
-    this.isActive = false
-  }
+  // deactivateProject() {
+  //   this.isActive = false
+  // }
 
   deleteTodo(todoId) {
     return this.todos.filter(todo => todo.id !== todoId)
+  }
+
+  renderTodos() {
+    todosList.innerHTML = "";
+    this.todos.forEach(todo => {
+      const html = `<li class="todo-list-item">
+                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span></p>
+                    </li>`;
+      todosList.insertAdjacentHTML("afterbegin", html)
+    })
   }
 }
 
@@ -115,30 +141,37 @@ const projectManager = new ProjectManager();
 // ako ima, deaktivirat ga i napravit novi. 
 // ako nema, napravit novi
 
+// projectForm.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   if (!projectFormInput.value) return
+//   if (projectManager.findActiveProject() !== undefined) {
+//     const activateProject = projectManager.findActiveProject()
+//     activateProject.deactivateProject()
+//   }
+//   const newProject = new Project(projectFormInputValue);
+//   clearProjectFormInput()
+//   projectManager.addProject(newProject);
+//   console.log(projectManager.projects)
+//   projectManager.renderProjects();
+// })
+
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!projectFormInput.value) return
-  if (projectManager.findActiveProject() !== undefined) {
-    const activateProject = projectManager.findActiveProject()
-    activateProject.deactivateProject()
-  }
   const newProject = new Project(projectFormInputValue);
+  projectManager.setActiveProject(newProject);
   clearProjectFormInput()
   projectManager.addProject(newProject);
-  console.log(projectManager.projects)
+  projectManager.renderProjects();
+  console.log("projects: ", projectManager.projects)
 })
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  if (!todoTextFormInput.value || !dueDateInput.value) return
-  if (projectManager.findActiveProject() !== undefined) {
-    const activateProject = projectManager.findActiveProject()
-    activateProject.deactivateProject()
-  }
-  
-  const activeProject = projectManager.findActiveProject();
+  if (!todoTextFormInput.value || !dueDateInput.value || !projectManager.getActiveProject()) return // treba ubacit toastify
   const todo = new Todo(todoTextFormInputValue, dueDateInputValue)
-  activeProject.addTodo(todo)
-  console.log(activeProject)
+  projectManager.getActiveProject().addTodo(todo)
+  console.log("active project: ", projectManager.getActiveProject())
   clearTodoFormInput()
+  projectManager.getActiveProject().renderTodos()
 })
