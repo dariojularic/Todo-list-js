@@ -93,6 +93,12 @@ h3 {
   background-color:  rgb(239, 239, 239);
   padding: 24px;
   border-radius: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 2;
 }
 
 .project-form-input, .todo-text-form-input, .due-date-input {

@@ -170,6 +170,8 @@ projectForm.addEventListener("submit", (event) => {
   projectManager.addProject(newProject);
   projectManager.renderProjects();
   projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
+  projectForm.style.visibility = "hidden";
+  overlay.style.visibility = "hidden";
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -210,17 +212,21 @@ projectsList.addEventListener("click", (event) => {
   }
 })
 
-// newProjectBtn.addEventListener("click", () => {
-//   projectForm
-// })
+newProjectBtn.addEventListener("click", () => {
+  projectForm.style.visibility = "visible";
+  overlay.style.visibility = "visible";
+  projectFormInput.focus();
+})
 
 newTodoBtn.addEventListener("click", () => {
   todoForm.style.visibility = "visible";
-  // todoForm.style.zIndex = 2;
   overlay.style.visibility = "visible";
+  todoTextFormInput.focus();
 })
 
 overlay.addEventListener("click", () => {
   overlay.style.visibility = "hidden";
   todoForm.style.visibility = "hidden";
+  projectForm.style.visibility = "hidden";
+  overlay.style.visibility = "hidden";
 })
