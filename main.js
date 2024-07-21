@@ -86,14 +86,18 @@ class Project {
   // }
 
   deleteTodo(todoId) {
-    return this.todos.filter(todo => todo.id !== todoId)
+    return this.todos = this.todos.filter(todo => todo.id !== todoId)
   }
+
+  // na klik gumba delete obrisat todo i ponovo renderat
+  // na klik gumba edit prikazat formu sa ispunjenim poljima toga todo itema
+
 
   renderTodos() {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
-      const html = `<li class="todo-list-item" data-id="${todo.id}">
-                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span></p>
+      const html = `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
+                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button>Edit</button> <input type="checkbox"> </p>
                     </li>`;
       todosList.insertAdjacentHTML("beforeend", html)
     })
@@ -143,8 +147,8 @@ function clearTodoFormInput() {
 
 const projectManager = new ProjectManager();
 
-// provjerit ima li aktivni projekt. 
-// ako ima, deaktivirat ga i napravit novi. 
+// provjerit ima li aktivni projekt.
+// ako ima, deaktivirat ga i napravit novi.
 // ako nema, napravit novi
 
 // projectForm.addEventListener("submit", (event) => {
@@ -205,10 +209,17 @@ projectsList.addEventListener("click", (event) => {
   if (event.target.closest("li").classList.contains("project-list-item")) {
     projectsList.querySelector(".selected").classList.remove("selected")
     event.target.closest("li").classList.add("selected");
-    
+
     const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.setActiveProject(selectedProject);
     projectManager.getActiveProject().renderTodos();
+  }
+})
+
+todosList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-todo-btn")) {
+    projectManager.getActiveProject().deleteTodo(event.target.closest("li").getAttribute("data-id"));
+    projectManager.getActiveProject().renderTodos()
   }
 })
 
