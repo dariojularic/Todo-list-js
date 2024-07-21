@@ -15,6 +15,11 @@ let todoTextFormInputValue = "";
 let projectFormInputValue = "";
 let dueDateInputValue = "";
 
+const heading = document.querySelector("h1")
+console.log(heading)
+heading.remove()
+
+
 projectFormInput.addEventListener("input", () => projectFormInputValue = projectFormInput.value);
 todoTextFormInput.addEventListener("input", () => todoTextFormInputValue = todoTextFormInput.value);
 dueDateInput.addEventListener("input", () => dueDateInputValue = dueDateInput.value)
@@ -92,12 +97,17 @@ class Project {
   // na klik gumba delete obrisat todo i ponovo renderat
   // na klik gumba edit prikazat formu sa ispunjenim poljima toga todo itema
 
+  // zakacis id na li elemente u todo listi
+  // kad kliknes na edit, procitas id sa li elementa
+  // odradis logiku isEditing i onda innerhtml samo tog elementa postavis da je forma i onda submit
 
+  // umjesto delete
   renderTodos() {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
+      // ${todo.isEditing ? forma }:
       const html = `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
-                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button>Edit</button> <input type="checkbox"> </p>
+                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button class="edit-todo-btn">Edit</button> <input class="checkbox" type="checkbox" ${todo.checked ? "checked" : ""}> </p>
                     </li>`;
       todosList.insertAdjacentHTML("beforeend", html)
     })
@@ -113,6 +123,15 @@ class Todo {
     this.time = new Date();
   }
 
+  // is editing = false kad se
+  // kad se klikne na edit, is editing = true
+  // u funkciju render todos provjerit ima li koji todo da mu je editing true
+  // ako mu je editing true ne renderujes todo koji sad prikazujes, nego formu
+  // inputi forme ce bit popunjeni vrijednostima todoa koji se edituje
+  // na submit vratim editing na false i za trenutni todo kome je editing true update novim vrijednostima
+  // render todos, svi su false i standardno radi
+
+  // provjerit
   editTodo(text, dueDate) {
     this.text = text
     this.dueDate = dueDate
@@ -190,6 +209,7 @@ todoForm.addEventListener("submit", (event) => {
 })
 
 projectsList.addEventListener("click", (event) => {
+  // if const currentLi
   if (event.target.classList.contains("delete-project-btn")) {
     projectManager.deleteProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.renderProjects();
@@ -220,6 +240,15 @@ todosList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-todo-btn")) {
     projectManager.getActiveProject().deleteTodo(event.target.closest("li").getAttribute("data-id"));
     projectManager.getActiveProject().renderTodos()
+  }
+
+  if (event.target.classList.contains("checkbox")) {
+    projectManager.getActiveProject().findTodo(event.target.closest("li").getAttribute("data-id")).toggleChecked()
+  }
+
+  // edit todo
+  if (event.target.classList.contains("edit-todo-btn")) {
+    event.target.closest("li").getAttribute("data-id");
   }
 })
 

@@ -151,6 +151,7 @@ h3 {
 .todo-list-item-paragraph {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
@@ -175,5 +176,34 @@ h3 {
 }
 
 .selected {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.delete-todo-btn {
+  background-color: rgb(210, 6, 6);
+  color: white;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-todo-btn {
+  background-color: rgb(210, 176, 6);
+  color: white;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.delete-todo-btn:hover {
+  background-color: rgb(189, 2, 2);
+}
+
+
+.edit-todo-btn:hover {
+  background-color: rgb(171, 143, 3);
+
 }
