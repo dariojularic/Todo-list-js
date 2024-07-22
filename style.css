@@ -222,6 +222,7 @@ h3 {
   width: 240px;
   padding: 8px;
   margin-right: 16px;
+  /* font-size: 18px; */
 }
 
 .edit-form-date-input {
@@ -243,6 +244,7 @@ h3 {
 
 .item-due-date {
   width: 180px;
+  /* font-weight: 700; */
 }
 
 span {
@@ -253,6 +255,7 @@ span {
 
 .edit-label {
   align-self: center;
+  /* font-weight: 700; */
 }
 
 .edit-form-submit-btn {

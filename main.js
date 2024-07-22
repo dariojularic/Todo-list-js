@@ -102,7 +102,7 @@ class Project {
                       <form class="edit-form">
                         <p>${this.todos.indexOf(todo) + 1}</p>
                         <input class="edit-form-text-input" type="text" value="${todo.text}" autofocus>
-                        <label for="edit-date-input" class="edit-label">Due Date:</label>
+                        <label for="edit-date-input" class="edit-label">Due Date: </label>
                         <input class="edit-form-date-input" type="date" value="${todo.dueDate}" id="edit-date-input">
                         <button type="submit" class="edit-form-submit-btn">Submit</button>
                       </form>
