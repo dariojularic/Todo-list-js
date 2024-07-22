@@ -71,7 +71,6 @@ class Project {
     this.name = name
     this.id = crypto.randomUUID();
     this.todos = [];
-    // this.isActive = true;
   }
 
   addTodo(todo) {
@@ -81,14 +80,6 @@ class Project {
   findTodo(todoId) {
     return this.todos.find(todo => todo.id === todoId);
   }
-
-  // activateProject() {
-  //   this.isActive = true
-  // }
-
-  // deactivateProject() {
-  //   this.isActive = false
-  // }
 
   deleteTodo(todoId) {
     return this.todos = this.todos.filter(todo => todo.id !== todoId)
@@ -106,10 +97,17 @@ class Project {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
       // ${todo.isEditing ? forma }:
-      const html = `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
+      const form = `<li class="edit-todo-list-item">
+                      <form class="edit-form">
+                        <input class="edit-form-text-input" type="text">
+                        <input class="edit-form-date-input" type="date">
+                        <button class="edit-form-submit-btn">Submit</button>
+                      </form>
+                    </li>`
+      const paragraph = `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
                       <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button class="edit-todo-btn">Edit</button> <input class="checkbox" type="checkbox" ${todo.checked ? "checked" : ""}> </p>
                     </li>`;
-      todosList.insertAdjacentHTML("beforeend", html)
+      todosList.insertAdjacentHTML("beforeend", `${todo.isEditing ? form : paragraph}`)
     })
   }
 }
@@ -121,6 +119,7 @@ class Todo {
     this.id = crypto.randomUUID();
     this.checked = false;
     this.time = new Date();
+    this.isEditing = false
   }
 
   // is editing = false kad se
