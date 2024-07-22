@@ -78,7 +78,7 @@ h3 {
 }
 
 .todos-list {
-  max-width: 640px;
+  max-width: 800px;
   min-width: 480px;
   max-height: 400px;
   min-height: 240px;
@@ -188,6 +188,7 @@ h3 {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  margin-right: 16px;
 }
 
 .edit-todo-btn {
@@ -198,9 +199,15 @@ h3 {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  margin-right: 16px;
 }
 .delete-todo-btn:hover {
   background-color: rgb(189, 2, 2);
+}
+
+.edit-form {
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -209,15 +216,51 @@ h3 {
 
 }
 
-.edit-todo-list-item {
-  /* z-index: 4325; */
-}
 
 .edit-form-text-input {
   border: none;
   background-color:  rgb(239, 239, 239);
+  width: 240px;
+  padding: 8px;
+  margin-right: 16px;
 }
 
 .edit-form-date-input {
+  width: 180px;
+  border: none;
+  background-color:  rgb(239, 239, 239);
+  margin-right: 16px;
+  padding: 0;
 
+}
+
+.todo-item-text {
+  overflow: auto;
+  width: 240px;
+  max-height: 64px;
+  /* align-self: center; */
+  padding: 8px;
+}
+
+.item-due-date {
+  width: 180px;
+}
+
+span {
+  margin-right: 16px;
+  word-break: break-word;
+
+}
+
+.edit-label {
+  align-self: center;
+}
+
+.edit-form-submit-btn {
+  background-color:  rgb(210, 176, 6);
+  color: white;
+  border: none;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0 16px;
 }

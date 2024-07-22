@@ -73,6 +73,10 @@ class Project {
     this.todos = [];
   }
 
+  getTodosArray() {
+    return this.todos
+  }
+
   addTodo(todo) {
     this.todos.push(todo);
   }
@@ -98,16 +102,19 @@ class Project {
     this.todos.forEach(todo => {
       const form = `<li class="edit-todo-list-item">
                       <form class="edit-form">
-                        <input class="edit-form-text-input" type="text">
-                        <input class="edit-form-date-input" type="date">
+                        <p>${this.todos.indexOf(todo) + 1}</p>
+                        <input class="edit-form-text-input" type="text" value="${todo.text}" autofocus>
+                        <label for="edit-date-input" class="edit-label">Due Date:</label>
+                        <input class="edit-form-date-input" type="date" value="${todo.dueDate}" id="edit-date-input">
                         <button class="edit-form-submit-btn">Submit</button>
                       </form>
-                    </li>`
-      const paragraph = `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
-                      <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.todos.indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button class="edit-todo-btn">Edit</button> <input class="checkbox" type="checkbox" ${todo.checked ? "checked" : ""}> </p>
                     </li>`;
+      const paragraph =  `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
+                            <p class="todo-list-item-paragraph"><span class="todo-item-number">${this.getTodosArray().indexOf(todo) + 1}</span> <span class="todo-item-text">${todo.text}</span> <span class="item-due-date"> Due Date: ${todo.dueDate}</span> <button class="delete-todo-btn">Delete</button> <button class="edit-todo-btn">Edit</button> <input class="checkbox" type="checkbox" ${todo.checked ? "checked" : ""}> </p>
+                          </li>`;
       todosList.insertAdjacentHTML("beforeend", `${todo.isEditing ? form : paragraph}`)
     })
+    // todosList.querySelector(".edit-form-text-input").focus()
   }
 }
 
@@ -182,6 +189,10 @@ projectForm.addEventListener("submit", (event) => {
   projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
   projectForm.style.visibility = "hidden";
   overlay.style.visibility = "hidden";
+  newTodoBtn.focus()
+  projectManager.getActiveProject().renderTodos()
+  console.log("active project", projectManager.getActiveProject())
+  console.log("new project", newProject)
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -193,6 +204,7 @@ todoForm.addEventListener("submit", (event) => {
   projectManager.getActiveProject().renderTodos();
   overlay.style.visibility = "hidden";
   todoForm.style.visibility = "hidden";
+  newTodoBtn.focus()
 })
 
 projectsList.addEventListener("click", (event) => {
@@ -213,7 +225,6 @@ projectsList.addEventListener("click", (event) => {
   if (event.target.closest("li").classList.contains("project-list-item")) {
     projectsList.querySelector(".selected").classList.remove("selected")
     event.target.closest("li").classList.add("selected");
-
     const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.setActiveProject(selectedProject);
     projectManager.getActiveProject().renderTodos();
