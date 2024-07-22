@@ -15,9 +15,9 @@ let todoTextFormInputValue = "";
 let projectFormInputValue = "";
 let dueDateInputValue = "";
 
-const heading = document.querySelector("h1")
-console.log(heading)
-heading.remove()
+// const heading = document.querySelector("h1")
+// console.log(heading)
+// heading.remove()
 
 
 projectFormInput.addEventListener("input", () => projectFormInputValue = projectFormInput.value);
@@ -98,9 +98,9 @@ class Project {
 
   // umjesto delete
   renderTodos() {
-    todosList.innerHTML = "";
+    // todosList.innerHTML = "";
     this.todos.forEach(todo => {
-      const form = `<li class="edit-todo-list-item">
+      const form = `<li class="edit-todo-list-item" data-id="${todo.id}">
                       <form class="edit-form">
                         <p>${this.todos.indexOf(todo) + 1}</p>
                         <input class="edit-form-text-input" type="text" value="${todo.text}" autofocus>
@@ -191,8 +191,8 @@ projectForm.addEventListener("submit", (event) => {
   overlay.style.visibility = "hidden";
   newTodoBtn.focus()
   projectManager.getActiveProject().renderTodos()
-  console.log("active project", projectManager.getActiveProject())
-  console.log("new project", newProject)
+  // console.log("active project", projectManager.getActiveProject())
+  // console.log("new project", newProject)
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -232,6 +232,7 @@ projectsList.addEventListener("click", (event) => {
 })
 
 todosList.addEventListener("click", (event) => {
+  event.preventDefault()
   if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox")) {
     const currentListItem = event.target.closest("li")
 
@@ -250,6 +251,16 @@ todosList.addEventListener("click", (event) => {
     if (event.target.classList.contains("edit-todo-btn")) {
       projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
       projectManager.getActiveProject().renderTodos()
+    }
+    console.log("submit btn", event.target.classList.contains("edit-form-submit-btn"))
+    if (event.target.classList.contains("edit-form-submit-btn")) {
+      const editedTodo = projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id"))
+      editedTodo.editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
+      editedTodo.setIsEditingToFalse()
+      projectManager.getActiveProject().renderTodos()
+      console.log(projectManager.getTodosArray())
+      // .editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
+
     }
   }
 })
