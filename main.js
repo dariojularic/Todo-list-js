@@ -136,6 +136,14 @@ class Todo {
     this.dueDate = dueDate
   }
 
+  setIsEditingToTrue() {
+    this.isEditing = true;
+  }
+
+  setIsEditingToFalse() {
+    this.isEditing = false;
+  }
+
   toggleChecked() {
     this.checked = !this.checked
   }
@@ -236,19 +244,24 @@ projectsList.addEventListener("click", (event) => {
 })
 
 todosList.addEventListener("click", (event) => {
+if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox")) {
+  const currentListItem = event.target.closest("li")
+
   if (event.target.classList.contains("delete-todo-btn")) {
-    projectManager.getActiveProject().deleteTodo(event.target.closest("li").getAttribute("data-id"));
+    projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
     projectManager.getActiveProject().renderTodos()
   }
 
   if (event.target.classList.contains("checkbox")) {
-    projectManager.getActiveProject().findTodo(event.target.closest("li").getAttribute("data-id")).toggleChecked()
+    projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).toggleChecked()
   }
 
   // edit todo
   if (event.target.classList.contains("edit-todo-btn")) {
-    event.target.closest("li").getAttribute("data-id");
+    projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
+    projectManager.getActiveProject().renderTodos()
   }
+}
 })
 
 newProjectBtn.addEventListener("click", () => {
