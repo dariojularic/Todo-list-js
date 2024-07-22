@@ -221,26 +221,26 @@ projectsList.addEventListener("click", (event) => {
 })
 
 todosList.addEventListener("click", (event) => {
-if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox")) {
-  const currentListItem = event.target.closest("li")
+  if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox")) {
+    const currentListItem = event.target.closest("li")
 
-  if (event.target.classList.contains("delete-todo-btn")) {
-    projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
-    // projectManager.getActiveProject().renderTodos()
-    currentListItem.remove()
-  }
+    if (event.target.classList.contains("delete-todo-btn")) {
+      projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
+      // projectManager.getActiveProject().renderTodos()
+      currentListItem.remove()
+    }
 
-  if (event.target.classList.contains("checkbox")) {
-    projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).toggleChecked()
-  }
+    if (event.target.classList.contains("checkbox")) {
+      projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).toggleChecked()
+    }
 
-  // edit todo
-  // u zavrit css za edit formu
-  if (event.target.classList.contains("edit-todo-btn")) {
-    projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
-    projectManager.getActiveProject().renderTodos()
+    // edit todo
+    // u zavrit css za edit formu
+    if (event.target.classList.contains("edit-todo-btn")) {
+      projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
+      projectManager.getActiveProject().renderTodos()
+    }
   }
-}
 })
 
 newProjectBtn.addEventListener("click", () => {
