@@ -15,10 +15,6 @@ let todoTextFormInputValue = "";
 let projectFormInputValue = "";
 let dueDateInputValue = "";
 
-// const heading = document.querySelector("h1")
-// console.log(heading)
-// heading.remove()
-
 projectFormInput.addEventListener("input", () => projectFormInputValue = projectFormInput.value);
 todoTextFormInput.addEventListener("input", () => todoTextFormInputValue = todoTextFormInput.value);
 dueDateInput.addEventListener("input", () => dueDateInputValue = dueDateInput.value)
@@ -87,14 +83,6 @@ class Project {
     return this.todos = this.todos.filter(todo => todo.id !== todoId)
   }
 
-  // na klik gumba delete obrisat todo i ponovo renderat
-  // na klik gumba edit prikazat formu sa ispunjenim poljima toga todo itema
-
-  // zakacis id na li elemente u todo listi
-  // kad kliknes na edit, procitas id sa li elementa
-  // odradis logiku isEditing i onda innerhtml samo tog elementa postavis da je forma i onda submit
-
-  // umjesto delete
   renderTodos() {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
@@ -125,15 +113,6 @@ class Todo {
     this.isEditing = false
   }
 
-  // is editing = false kad se
-  // kad se klikne na edit, is editing = true
-  // u funkciju render todos provjerit ima li koji todo da mu je editing true
-  // ako mu je editing true ne renderujes todo koji sad prikazujes, nego formu
-  // inputi forme ce bit popunjeni vrijednostima todoa koji se edituje
-  // na submit vratim editing na false i za trenutni todo kome je editing true update novim vrijednostima
-  // render todos, svi su false i standardno radi
-
-  // provjerit
   editTodo(text, dueDate) {
     this.text = text
     this.dueDate = dueDate
@@ -208,7 +187,6 @@ projectsList.addEventListener("click", (event) => {
     if (event.target.classList.contains("delete-project-btn")) {
       projectManager.deleteProject(currentListItem.getAttribute("data-id"));
       currentListItem.remove()
-      // projectManager.renderProjects();
       if (!projectManager.getProjects()[0]) {
         todosList.innerHTML = "";
         return
@@ -218,14 +196,14 @@ projectsList.addEventListener("click", (event) => {
       projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
       return
     }
-  }
 
-  if (currentListItem.classList.contains("project-list-item")) {
-    projectsList.querySelector(".selected").classList.remove("selected")
-    currentListItem.classList.add("selected");
-    const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
-    projectManager.setActiveProject(selectedProject);
-    projectManager.getActiveProject().renderTodos();
+    if (currentListItem.classList.contains("project-list-item")) {
+      projectsList.querySelector(".selected").classList.remove("selected")
+      currentListItem.classList.add("selected");
+      const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
+      projectManager.setActiveProject(selectedProject);
+      projectManager.getActiveProject().renderTodos();
+    }
   }
 })
 
@@ -241,11 +219,9 @@ todosList.addEventListener("click", (event) => {
 
     if (event.target.classList.contains("delete-todo-btn")) {
       projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
-      // projectManager.getActiveProject().renderTodos()
       currentListItem.remove()
     }
 
-    // edit todo
     if (event.target.classList.contains("edit-todo-btn")) {
       projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
       projectManager.getActiveProject().renderTodos()
@@ -256,8 +232,6 @@ todosList.addEventListener("click", (event) => {
       editedTodo.editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
       editedTodo.setIsEditingToFalse()
       projectManager.getActiveProject().renderTodos()
-      // .editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
-
     }
   }
 })
