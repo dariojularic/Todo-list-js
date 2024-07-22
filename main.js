@@ -96,7 +96,6 @@ class Project {
   renderTodos() {
     todosList.innerHTML = "";
     this.todos.forEach(todo => {
-      // ${todo.isEditing ? forma }:
       const form = `<li class="edit-todo-list-item">
                       <form class="edit-form">
                         <input class="edit-form-text-input" type="text">
@@ -170,26 +169,7 @@ function clearTodoFormInput() {
   dueDateInput.value = "";
 }
 
-
 const projectManager = new ProjectManager();
-
-// provjerit ima li aktivni projekt.
-// ako ima, deaktivirat ga i napravit novi.
-// ako nema, napravit novi
-
-// projectForm.addEventListener("submit", (event) => {
-//   event.preventDefault();
-//   if (!projectFormInput.value) return
-//   if (projectManager.findActiveProject() !== undefined) {
-//     const activateProject = projectManager.findActiveProject()
-//     activateProject.deactivateProject()
-//   }
-//   const newProject = new Project(projectFormInputValue);
-//   clearProjectFormInput()
-//   projectManager.addProject(newProject);
-//   console.log(projectManager.projects)
-//   projectManager.renderProjects();
-// })
 
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -216,12 +196,10 @@ todoForm.addEventListener("submit", (event) => {
 })
 
 projectsList.addEventListener("click", (event) => {
-  // if const currentLi
   if (event.target.classList.contains("delete-project-btn")) {
     projectManager.deleteProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.renderProjects();
     if (!projectManager.getProjects()[0]) {
-      // ovo treba provjerit
       todosList.innerHTML = "";
       return
     }
@@ -229,7 +207,6 @@ projectsList.addEventListener("click", (event) => {
     projectManager.getActiveProject().renderTodos();
     console.log(projectManager.getActiveProject())
     projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
-    // projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected");
     return
   }
 
@@ -249,7 +226,8 @@ if (event.target.classList.contains("delete-todo-btn") || event.target.classList
 
   if (event.target.classList.contains("delete-todo-btn")) {
     projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
-    projectManager.getActiveProject().renderTodos()
+    // projectManager.getActiveProject().renderTodos()
+    currentListItem.remove()
   }
 
   if (event.target.classList.contains("checkbox")) {
@@ -257,6 +235,7 @@ if (event.target.classList.contains("delete-todo-btn") || event.target.classList
   }
 
   // edit todo
+  // u zavrit css za edit formu
   if (event.target.classList.contains("edit-todo-btn")) {
     projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
     projectManager.getActiveProject().renderTodos()
