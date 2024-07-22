@@ -19,11 +19,9 @@ let dueDateInputValue = "";
 // console.log(heading)
 // heading.remove()
 
-
 projectFormInput.addEventListener("input", () => projectFormInputValue = projectFormInput.value);
 todoTextFormInput.addEventListener("input", () => todoTextFormInputValue = todoTextFormInput.value);
 dueDateInput.addEventListener("input", () => dueDateInputValue = dueDateInput.value)
-
 
 class ProjectManager{
   constructor() {
@@ -98,7 +96,7 @@ class Project {
 
   // umjesto delete
   renderTodos() {
-    // todosList.innerHTML = "";
+    todosList.innerHTML = "";
     this.todos.forEach(todo => {
       const form = `<li class="edit-todo-list-item" data-id="${todo.id}">
                       <form class="edit-form">
@@ -106,7 +104,7 @@ class Project {
                         <input class="edit-form-text-input" type="text" value="${todo.text}" autofocus>
                         <label for="edit-date-input" class="edit-label">Due Date:</label>
                         <input class="edit-form-date-input" type="date" value="${todo.dueDate}" id="edit-date-input">
-                        <button class="edit-form-submit-btn">Submit</button>
+                        <button type="submit" class="edit-form-submit-btn">Submit</button>
                       </form>
                     </li>`;
       const paragraph =  `<li class="todo-list-item" id="${todo.id}" data-id="${todo.id}">
@@ -114,7 +112,6 @@ class Project {
                           </li>`;
       todosList.insertAdjacentHTML("beforeend", `${todo.isEditing ? form : paragraph}`)
     })
-    // todosList.querySelector(".edit-form-text-input").focus()
   }
 }
 
@@ -191,8 +188,6 @@ projectForm.addEventListener("submit", (event) => {
   overlay.style.visibility = "hidden";
   newTodoBtn.focus()
   projectManager.getActiveProject().renderTodos()
-  // console.log("active project", projectManager.getActiveProject())
-  // console.log("new project", newProject)
 })
 
 todoForm.addEventListener("submit", (event) => {
@@ -217,7 +212,6 @@ projectsList.addEventListener("click", (event) => {
     }
     projectManager.setActiveProject(projectManager.getProjects()[0]);
     projectManager.getActiveProject().renderTodos();
-    console.log(projectManager.getActiveProject())
     projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
     return
   }
@@ -233,8 +227,13 @@ projectsList.addEventListener("click", (event) => {
 
 todosList.addEventListener("click", (event) => {
   event.preventDefault()
-  if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox")) {
+  if (event.target.classList.contains("delete-todo-btn") || event.target.classList.contains("edit-todo-btn") || event.target.classList.contains("checkbox") || event.target.classList.contains("edit-form-submit-btn")) {
     const currentListItem = event.target.closest("li")
+
+    if (event.target.classList.contains("checkbox")) {
+      projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).toggleChecked()
+      projectManager.getActiveProject().renderTodos()
+    }
 
     if (event.target.classList.contains("delete-todo-btn")) {
       projectManager.getActiveProject().deleteTodo(currentListItem.getAttribute("data-id"));
@@ -242,23 +241,17 @@ todosList.addEventListener("click", (event) => {
       currentListItem.remove()
     }
 
-    if (event.target.classList.contains("checkbox")) {
-      projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).toggleChecked()
-    }
-
     // edit todo
-    // u zavrit css za edit formu
     if (event.target.classList.contains("edit-todo-btn")) {
       projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id")).setIsEditingToTrue();
       projectManager.getActiveProject().renderTodos()
     }
-    console.log("submit btn", event.target.classList.contains("edit-form-submit-btn"))
+
     if (event.target.classList.contains("edit-form-submit-btn")) {
       const editedTodo = projectManager.getActiveProject().findTodo(currentListItem.getAttribute("data-id"))
       editedTodo.editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
       editedTodo.setIsEditingToFalse()
       projectManager.getActiveProject().renderTodos()
-      console.log(projectManager.getTodosArray())
       // .editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
 
     }
