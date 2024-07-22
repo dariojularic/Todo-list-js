@@ -203,22 +203,26 @@ todoForm.addEventListener("submit", (event) => {
 })
 
 projectsList.addEventListener("click", (event) => {
-  if (event.target.classList.contains("delete-project-btn")) {
-    projectManager.deleteProject(event.target.closest("li").getAttribute("data-id"));
-    projectManager.renderProjects();
-    if (!projectManager.getProjects()[0]) {
-      todosList.innerHTML = "";
+  if (event.target.classList.contains("delete-project-btn") || event.target.closest("li").classList.contains("project-list-item")) {
+    const currentListItem = event.target.closest("li")
+    if (event.target.classList.contains("delete-project-btn")) {
+      projectManager.deleteProject(currentListItem.getAttribute("data-id"));
+      currentListItem.remove()
+      // projectManager.renderProjects();
+      if (!projectManager.getProjects()[0]) {
+        todosList.innerHTML = "";
+        return
+      }
+      projectManager.setActiveProject(projectManager.getProjects()[0]);
+      projectManager.getActiveProject().renderTodos();
+      projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
       return
     }
-    projectManager.setActiveProject(projectManager.getProjects()[0]);
-    projectManager.getActiveProject().renderTodos();
-    projectsList.querySelector(`.item-${projectManager.getActiveProject().id}`).classList.add("selected")
-    return
   }
 
-  if (event.target.closest("li").classList.contains("project-list-item")) {
+  if (currentListItem.classList.contains("project-list-item")) {
     projectsList.querySelector(".selected").classList.remove("selected")
-    event.target.closest("li").classList.add("selected");
+    currentListItem.classList.add("selected");
     const selectedProject = projectManager.findProject(event.target.closest("li").getAttribute("data-id"));
     projectManager.setActiveProject(selectedProject);
     projectManager.getActiveProject().renderTodos();
