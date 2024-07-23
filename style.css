@@ -224,12 +224,10 @@ h3 {
   width: 240px;
   padding: 8px;
   margin-right: 16px;
-  /* font-size: 18px; */
 }
 
 .edit-form-date-input {
   width: 180px;
-  /* border: none; */
   background-color:  rgb(239, 239, 239);
   margin-right: 16px;
   padding: 0;
@@ -240,13 +238,11 @@ h3 {
   overflow: auto;
   width: 240px;
   max-height: 64px;
-  /* align-self: center; */
   padding: 8px;
 }
 
 .item-due-date {
   width: 180px;
-  /* font-weight: 700; */
 }
 
 span {
