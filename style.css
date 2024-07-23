@@ -217,7 +217,7 @@ h3 {
 
 
 .edit-form-text-input {
-  border: none;
+  /* border: none; */
   background-color:  rgb(239, 239, 239);
   width: 240px;
   padding: 8px;
@@ -227,7 +227,7 @@ h3 {
 
 .edit-form-date-input {
   width: 180px;
-  border: none;
+  /* border: none; */
   background-color:  rgb(239, 239, 239);
   margin-right: 16px;
   padding: 0;

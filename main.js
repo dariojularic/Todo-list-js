@@ -232,6 +232,7 @@ todosList.addEventListener("click", (event) => {
       editedTodo.editTodo(currentListItem.querySelector(".edit-form-text-input").value, currentListItem.querySelector(".edit-form-date-input").value)
       editedTodo.setIsEditingToFalse()
       projectManager.getActiveProject().renderTodos()
+      currentListItem.querySelector(".edit-form-text-input").focus()
     }
   }
 })
