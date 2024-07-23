@@ -89,9 +89,9 @@ class Project {
       const form = `<li class="edit-todo-list-item" data-id="${todo.id}">
                       <form class="edit-form">
                         <p>${this.todos.indexOf(todo) + 1}</p>
-                        <input class="edit-form-text-input" type="text" value="${todo.text}" autofocus>
+                        <input class="edit-form-text-input" type="text" value="${todo.getTodosText()}" autofocus>
                         <label for="edit-date-input" class="edit-label">Due Date: </label>
-                        <input class="edit-form-date-input" type="date" value="${todo.dueDate}" id="edit-date-input">
+                        <input class="edit-form-date-input" type="date" value="${todo.getTodosDueDate()}" id="edit-date-input">
                         <button type="submit" class="edit-form-submit-btn">Submit</button>
                       </form>
                     </li>`;
@@ -109,7 +109,6 @@ class Todo {
     this.dueDate = dueDate;
     this.id = crypto.randomUUID();
     this.checked = false;
-    this.time = new Date();
     this.isEditing = false
   }
 
@@ -136,10 +135,6 @@ class Todo {
 
   getTodosDueDate() {
     return this.dueDate
-  }
-
-  getTodosTime() {
-    return this.time
   }
 }
 
